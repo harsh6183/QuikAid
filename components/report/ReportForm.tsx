@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import crypto from "crypto";
 import { LocationInput } from "./LocationInput";
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import MapPreview from "@/components/MapPreview"
 import "leaflet/dist/leaflet.css";
 
 
@@ -222,24 +222,9 @@ export function ReportForm({ onComplete }: ReportFormProps) {
       />
 
       {/* 🗺️ Map Preview */}
-      {coordinates.latitude && coordinates.longitude && (
-        <div className="rounded-2xl overflow-hidden shadow-lg">
-          <MapContainer
-            center={[coordinates.latitude, coordinates.longitude]}
-            zoom={16}
-            scrollWheelZoom={false}
-            style={{ height: "300px", width: "100%" }}
-          >
-            <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker
-              position={[coordinates.latitude, coordinates.longitude]}
-            />
-          </MapContainer>
-        </div>
-      )}
+     {coordinates.latitude && coordinates.longitude && (
+  <MapPreview lat={coordinates.latitude} lng={coordinates.longitude} />
+)}
 
   
   </form>

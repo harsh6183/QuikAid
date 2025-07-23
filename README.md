@@ -37,4 +37,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## 21 july done with Home page 1.17
 
-## For live location used the API from the MapBox website.
+## For live location used the OpenStreet Map source.

@@ -39,3 +39,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 
 ## For live location used the OpenStreet Map source.
 ## 23 july done with the submite report page
+
+## For Database I used Prisma and neon.

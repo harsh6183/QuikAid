@@ -1,9 +1,8 @@
 import Link from "next/link";
-import "leaflet/dist/leaflet.css";
-
 
 export default function Home() {
   return (
+    <div className="relative min-h-screen bg-black selection:bg-sky-500/20 overflow-hidden">
     <main className="relative px-6 pt-32">
       <div className="mx-auto max-w-5xl">
         {/* Hero Section */}
@@ -65,9 +64,8 @@ export default function Home() {
           </div>
         </div>
 
-        //Features grid
-
-         <div className="mt-40 grid gap-6 sm:grid-cols-3">
+        {/* Features Grid */}
+        <div className="mt-40 grid gap-6 sm:grid-cols-3">
           {[
             {
               title: "Military-Grade Encryption",
@@ -149,7 +147,7 @@ export default function Home() {
           ))}
         </div>
 
-       //Stats section
+        {/* Stats Section */}
         <div className="mt-40 rounded-2xl bg-zinc-900 p-8">
           <div className="grid gap-y-8 sm:grid-cols-3">
             {[
@@ -167,15 +165,16 @@ export default function Home() {
           </div>
         </div>
 
-         {/* Trust Badge */}
+        {/* Trust Badge */}
         <div className="mt-40 mb-20 flex justify-center">
           <div className="inline-flex items-center gap-3 rounded-full bg-zinc-900 px-5 py-2 text-sm text-zinc-400">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             Trusted by Law Enforcement Nationwide
           </div>
         </div>
-
       </div>
-    </main>   
+
+    </main>
+    </div>
   );
 }

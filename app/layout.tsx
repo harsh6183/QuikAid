@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navbar";
+import Navbar from "@/components/Navbar";
 import { Providers } from "./provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SafeReport - Anonymous Crime Reporting",
-  description: "Securely and anonymously report crimes to law enforcement",
+  title: "QuickAid- Emergency reporting webApp",
+  description: "Securely and anonymously report crimes and get help",
 };
 
 export default function RootLayout({

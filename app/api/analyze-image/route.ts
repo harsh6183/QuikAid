@@ -6,28 +6,33 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 export async function POST(request: Request) {
   try {
     const { image } = await request.json();
+
+    if (!image || !image.includes(",")) {
+      throw new Error("Invalid image data received");
+    }
+
+    const mimeType = image.match(/^data:(.*?);base64/)?.[1] || "image/jpeg";
     const base64Data = image.split(",")[1];
 
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-pro" });
 
     const prompt = `Analyze this emergency situation image and respond in this exact format without any asterisks or bullet points:
-    TITLE: Write a clear, brief title
-    TYPE: Choose one (Theft, Fire Outbreak, Medical Emergency, Natural Disaster, Violence, or Other)
-    DESCRIPTION: Write a clear, concise description`;
+TITLE: Write a clear, brief title
+TYPE: Choose one (Theft, Fire Outbreak, Medical Emergency, Natural Disaster, Violence, or Other)
+DESCRIPTION: Write a clear, concise description`;
 
     const result = await model.generateContent([
       prompt,
       {
         inlineData: {
           data: base64Data,
-          mimeType: "image/jpeg",
+          mimeType,
         },
       },
     ]);
 
-    const text = await result.response.text(); // Ensure text() is awaited
+    const text = await result.response.text();
 
-    // Parse the response more precisely
     const titleMatch = text.match(/TITLE:\s*(.+)/);
     const typeMatch = text.match(/TYPE:\s*(.+)/);
     const descMatch = text.match(/DESCRIPTION:\s*(.+)/);
@@ -37,8 +42,8 @@ export async function POST(request: Request) {
       reportType: typeMatch?.[1]?.trim() || "",
       description: descMatch?.[1]?.trim() || "",
     });
-  } catch (error) {
-    console.error("Image analysis error:", error);
+  } catch (error: any) {
+    console.error("Image analysis error:", error?.message || error);
     return NextResponse.json(
       { error: "Failed to analyze image" },
       { status: 500 }

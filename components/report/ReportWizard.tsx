@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ReportForm } from "./ReportForm";
+import { ReportForm} from "./ReportForm";
 import { ReportSubmitted } from "./ReportFormCompleted";
 
 export function ReportWizard() {

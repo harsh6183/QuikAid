@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import crypto from "crypto";
 import { LocationInput } from "./LocationInput";
 import MapPreview from "@/components/MapPreview"
 import "leaflet/dist/leaflet.css";
@@ -77,16 +76,12 @@ export function ReportForm({ onComplete }: ReportFormProps) {
     }
   };
 
-  const generateReportId = useCallback(() => {
-    const timestamp = Date.now().toString();
-    const randomBytes = crypto.randomBytes(16).toString("hex");
-    const combinedString = `${timestamp}-${randomBytes}`;
-    return crypto
-      .createHash("sha256")
-      .update(combinedString)
-      .digest("hex")
-      .slice(0, 16);
-  }, []);
+const generateReportId = useCallback(() => {
+  const array = new Uint32Array(4);
+  window.crypto.getRandomValues(array);
+  return Array.from(array, (val) => val.toString(16).padStart(8, '0')).join('-');
+}, []);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

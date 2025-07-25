@@ -1,5 +1,5 @@
 export const AuthorityPhoneNumbers: Record<string, string> = {
-  POLICE: '+919594151244',
-  HOSPITAL: '+919833454681',
+  POLICE: '+918010693451',
+  HOSPITAL: '+918010693451',
   FIRE_BRIGADE: '+918010693451',
 };

@@ -42,8 +42,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 => For live location used the OpenStreet Map source.
 
 
-## 25 july done with below parts adding in website.
+## 24 july done with below parts adding in website.
 => For Database I used Prisma and neon.  
 => Authentication for the Authorized board feature is done using NextAuth and used JWT encryption and decryption for signup and login feature
 
-## Remaining part is to add on the sms feature
+## 25 july done with environment setup files and SMS integration
+=> Used Twilio for the SMS integration
+=> Added saftey major decrypt model.

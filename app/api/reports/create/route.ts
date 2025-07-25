@@ -1,79 +1,53 @@
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
-
-import { ReportStatus, ReportType } from "@prisma/client";
 import prisma from "@/lib/prisma";
-import { authOptions } from "@/lib/auth";
+import { ReportType, ReportStatus } from "@prisma/client";
+import { v4 as uuidv4 } from "uuid";
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    const body = await req.json();
+    console.log("Incoming request body:", body);
+
+    const {
+      title,
+      description,
+      reportType,
+      type,
+      location,
+      latitude,
+      longitude,
+      image
+    } = body;
+
+    if (!title || !description || !reportType || !type) {
+      return NextResponse.json({
+        error: "Missing required fields",
+        received: body
+      }, { status: 400 });
     }
 
-    const { searchParams } = new URL(req.url);
-    const status = searchParams.get("status") as ReportStatus | null;
-    const type = searchParams.get("type") as ReportType | null;
+   const enumType = type === "EMERGENCY" ? ReportType.EMERGENCY : ReportType.NON_EMERGENCY;
 
-    // Build the where clause based on filters
-    const where = {
-      ...(status && { status }),
-      ...(type && { type }),
-    };
+    const newReport = await prisma.report.create({
+      data: {
+        reportId: uuidv4(),
+        title,
+        description,
+        type: type as ReportType,
+        reportType,  
+        location,
+        latitude,
+        longitude,
+        image,
+        status: ReportStatus.PENDING,
+      },
+    });
 
-    // Add timeout and retry logic
-    const reports = await Promise.race([
-      prisma.report.findMany({
-        where,
-        orderBy: {
-          createdAt: "desc",
-        },
-        select: {
-          id: true,
-          reportId: true,
-          type: true,
-          title: true,
-          description: true,
-          location: true,
-          latitude: true,
-          longitude: true,
-          image: true,
-          status: true,
-          createdAt: true,
-          updatedAt: true,
-        },
-      }),
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Database timeout")), 15000)
-      ),
-    ]);
-
-    return NextResponse.json(reports);
-  } catch (error: any) {
-    console.error("Failed to fetch reports:", error);
-
-    // More specific error messages
-    if (error.code === "P1001") {
-      return NextResponse.json(
-        { error: "Cannot connect to database. Please try again later." },
-        { status: 503 }
-      );
-    }
-
-    if (error.code === "P2024") {
-      return NextResponse.json(
-        { error: "Database connection timeout. Please try again." },
-        { status: 504 }
-      );
-    }
-
-    return NextResponse.json(
-      { error: "Failed to fetch reports" },
-      { status: 500 }
-    );
+    return NextResponse.json(newReport, { status: 201 });
+  } catch (error) {
+    console.error("Failed to create report:", error);
+    return NextResponse.json({ error: "Failed to create report" }, { status: 500 });
   } finally {
-    // Optional: Disconnect for serverless environments
     if (process.env.VERCEL) {
       await prisma.$disconnect();
     }

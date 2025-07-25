@@ -11,9 +11,9 @@ CREATE TYPE "Role" AS ENUM ('ADMIN', 'MODERATOR', 'USER');
 CREATE TABLE "Report" (
     "id" TEXT NOT NULL,
     "reportId" TEXT NOT NULL,
-    "type" "ReportType" NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "type" "ReportType" NOT NULL,
     "reportType" TEXT NOT NULL,
     "location" TEXT,
     "latitude" DOUBLE PRECISION,

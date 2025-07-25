@@ -22,9 +22,9 @@ enum ReportType {
 model Report {
   id          String   @id @default(cuid())
   reportId    String      @unique
-  type        ReportType
   title       String
   description String
+  type        ReportType
   reportType  String
   location    String?
   latitude    Float?

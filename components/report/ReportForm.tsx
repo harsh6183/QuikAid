@@ -14,6 +14,7 @@ const REPORT_TYPES = [
   "Other",
 ] as const;
 
+
 type ReportType = "EMERGENCY" | "NON_EMERGENCY";
 
 interface ReportFormProps {
@@ -27,6 +28,7 @@ export function ReportForm({ onComplete }: ReportFormProps) {
     location: "",
     description: "",
     title: "",
+    smsRecipient: "",
   });
   const [image, setImage] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -39,18 +41,18 @@ export function ReportForm({ onComplete }: ReportFormProps) {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
- const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-  const file = e.target.files?.[0];
-  if (!file) return;
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
 
-  const base64 = await new Promise((resolve) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result);
-    reader.readAsDataURL(file);
-  });
+    const base64 = await new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.readAsDataURL(file);
+    });
 
-  setImage(base64 as string); // just preview it
-};
+    setImage(base64 as string); // just preview it
+  };
 
 
   const generateReportId = useCallback(() => {
@@ -64,55 +66,56 @@ export function ReportForm({ onComplete }: ReportFormProps) {
       .slice(0, 16);
   }, []);
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  setIsSubmitting(true);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
 
-  if (!formData.incidentType) {
-    alert("Please select Emergency or Non-Emergency");
-    setIsSubmitting(false);
-    return;
-  }
-
-
-  try {
-    const reportData = {
-      reportId: generateReportId(),
-      type: formData.incidentType,
-      reportType: formData.reportType,
-      title: formData.title,
-      description: formData.description,
-      location: formData.location,
-      latitude: coordinates.latitude,
-      longitude: coordinates.longitude,
-      image: image,
-      status: "PENDING",
-    };
-    console.log("Submitting report:", reportData);
-    
-
-
-    const response = await fetch("/api/reports/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(reportData),
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.error || "Failed to submit report");
+    if (!formData.incidentType) {
+      alert("Please select Emergency or Non-Emergency");
+      setIsSubmitting(false);
+      return;
     }
 
-    onComplete(result);
-  } catch (error) {
-    console.error("Error submitting report:", error);
-  } finally {
-    setIsSubmitting(false);
-  }
-};
+
+    try {
+      const reportData = {
+        reportId: generateReportId(),
+        type: formData.incidentType,
+        reportType: formData.reportType,
+        title: formData.title,
+        description: formData.description,
+        location: formData.location,
+        latitude: coordinates.latitude,
+        longitude: coordinates.longitude,
+        image: image,
+        status: "PENDING",
+        smsRecipient: formData.smsRecipient,
+      };
+      console.log("Submitting report:", reportData);
+
+
+
+      const response = await fetch("/api/reports/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reportData),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || "Failed to submit report");
+      }
+
+      onComplete(result);
+    } catch (error) {
+      console.error("Error submitting report:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
 
   return (
@@ -124,11 +127,10 @@ const handleSubmit = async (e: React.FormEvent) => {
           onClick={() =>
             setFormData((prev) => ({ ...prev, incidentType: "EMERGENCY" }))
           }
-          className={`p-6 rounded-2xl border-2 transition-all duration-200 ${
-            formData.incidentType === "EMERGENCY"
+          className={`p-6 rounded-2xl border-2 transition-all duration-200 ${formData.incidentType === "EMERGENCY"
               ? "bg-red-500/20 border-red-500 shadow-lg shadow-red-500/20"
               : "bg-zinc-900/50 border-zinc-800 hover:bg-red-500/10 hover:border-red-500/50"
-          }`}
+            }`}
         >
           <div className="flex flex-col items-center space-y-2">
             <svg
@@ -156,11 +158,10 @@ const handleSubmit = async (e: React.FormEvent) => {
           onClick={() =>
             setFormData((prev) => ({ ...prev, incidentType: "NON_EMERGENCY" }))
           }
-          className={`p-6 rounded-2xl border-2 transition-all duration-200 ${
-            formData.incidentType === "NON_EMERGENCY"
+          className={`p-6 rounded-2xl border-2 transition-all duration-200 ${formData.incidentType === "NON_EMERGENCY"
               ? "bg-orange-500/20 border-orange-500 shadow-lg shadow-orange-500/20"
               : "bg-zinc-900/50 border-zinc-800 hover:bg-orange-500/10 hover:border-orange-500/50"
-          }`}
+            }`}
         >
           <div className="flex flex-col items-center space-y-2">
             <svg
@@ -283,6 +284,29 @@ const handleSubmit = async (e: React.FormEvent) => {
           ))}
         </select>
       </div>
+
+      {/* Who to Notify */}
+      <div>
+        <label className="block text-sm font-medium text-zinc-400 mb-2">
+          Notify Authority
+        </label>
+        <select
+          value={formData.smsRecipient}
+          onChange={(e) =>
+            setFormData((prev) => ({ ...prev, smsRecipient: e.target.value }))
+          }
+          className="w-full rounded-xl bg-zinc-900/50 border border-zinc-800 px-4 py-3.5
+             text-white transition-colors duration-200
+             focus:outline-none focus:ring-2 focus:ring-sky-500/40"
+          required
+        >
+          <option value="">Select authority</option>
+          <option value="POLICE">Police</option>
+          <option value="AMBULANCE">Ambulance</option>
+          <option value="FIRE_BRIGADE">Fire Brigade</option>
+        </select>
+      </div>
+
 
       {/* Location */}
       <LocationInput

@@ -33,8 +33,15 @@ model Report {
   status      ReportStatus @default(PENDING)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  smsRecipient String?
   @@index([reportId])
 }
+
+enum SmsRecipient {
+  POLICE
+  HOSPITAL
+}
+
 
 model User {
   id       Int      @id @default(autoincrement())

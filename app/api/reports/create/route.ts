@@ -16,10 +16,11 @@ export async function POST(req: Request) {
       location,
       latitude,
       longitude,
-      image
+      image,
+      smsRecipient
     } = body;
 
-    if (!title || !description || !reportType || !type) {
+    if (!title || !smsRecipient || !description || !reportType || !type) {
       return NextResponse.json({
         error: "Missing required fields",
         received: body
@@ -39,6 +40,7 @@ export async function POST(req: Request) {
         latitude,
         longitude,
         image,
+        smsRecipient,
         status: ReportStatus.PENDING,
       },
     });

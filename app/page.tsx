@@ -25,20 +25,18 @@ export default function Home() {
           </div>
 
           <h1 className="mt-8 bg-gradient-to-b from-white to-white/80 bg-clip-text text-6xl font-bold tracking-tight text-transparent sm:text-7xl">
-            Report Incident.
-            <span className="block bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
-              Protect Identity.
+           QuickAid 
+            <span className="mt-2 block bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent">
+              Report with Confidence.
             </span>
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-zinc-400">
-            Make your community safer without compromising your safety. Our
-            advanced encryption ensures your identity remains completely
-            anonymous.
+           A real-time, anonymous reporting platform built for public safety.
           </p>
 
           <div className="mt-10 flex flex-col sm:flex-row gap-4">
-            <Link href={"/submit-report"}>
+            <Link href={"/submit-reports"}>
               <button className="group relative flex h-12 items-center justify-center gap-2 rounded-xl bg-sky-500 px-8 text-sm font-medium text-white transition-all hover:bg-sky-400">
                 Make Anonymous Report
                 <svg

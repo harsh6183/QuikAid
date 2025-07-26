@@ -163,14 +163,12 @@ export function ReportTracker() {
                   <div className="flex justify-between items-center p-3 rounded-lg bg-white/5">
                     <span className="text-zinc-400">Status</span>
                     <span
-                      className={`text-xs font-semibold uppercase tracking-wide px-3 py-1 rounded-full 
-                        ${getStatusBadgeStyle(
-                          reportDetails.status || "pending"
-                        )}`}
+                      className={`font-medium ${getStatusColor(
+                        reportDetails.status
+                      )} 
+                        px-3 py-1 rounded-full bg-white/5`}
                     >
-                      {reportDetails.status
-                        ? reportDetails.status.toUpperCase()
-                        : "PENDING"}
+                      {reportDetails.status.toUpperCase()}
                     </span>
                   </div>
 
@@ -225,13 +223,12 @@ export function ReportTracker() {
   );
 }
 
-// Helper for badge color
-function getStatusBadgeStyle(status: string): string {
-  const styles: Record<string, string> = {
-    pending: "bg-yellow-500/20 text-yellow-400",
-    processing: "bg-sky-500/20 text-sky-400",
-    completed: "bg-emerald-500/20 text-emerald-400",
-    failed: "bg-red-500/20 text-red-400",
+function getStatusColor(status: string): string {
+  const statusColors: Record<string, string> = {
+    pending: "text-yellow-400",
+    processing: "text-sky-400",
+    completed: "text-emerald-400",
+    failed: "text-red-400",
   };
-  return styles[status.toLowerCase()] || "bg-zinc-600 text-white";
+  return statusColors[status.toLowerCase()] || "text-white";
 }

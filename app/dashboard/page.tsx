@@ -19,15 +19,16 @@ export default function Dashboard() {
   const fetchReports = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("/api/reports");
+      const response = await fetch("/api/reports?page=1&limit=100");
       const data = await response.json();
-      setReports(data);
+      setReports(data.reports); 
     } catch (error) {
       console.error("Error fetching reports:", error);
     } finally {
       setIsLoading(false);
     }
   };
+
 
   const updateReportStatus = async (
     reportId: string,
@@ -88,7 +89,7 @@ export default function Dashboard() {
                 {session?.user?.name || "Admin"}
               </span>
               <button
-                onClick={() => signOut({callbackUrl:"/"})}
+                onClick={() => signOut({ callbackUrl: "/" })}
                 className="px-4 py-2 text-sm font-medium text-neutral-300 bg-neutral-900 rounded-lg hover:bg-neutral-800 border border-neutral-800 transition-all hover:border-neutral-700"
               >
                 Sign out

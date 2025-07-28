@@ -31,7 +31,7 @@ export async function GET(
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { reportId: string } }
 ) {
   try {
     const session = await getServerSession();
@@ -41,7 +41,7 @@ export async function PATCH(
 
     const { status } = await request.json();
     const report = await prisma.report.update({
-      where: { id: params.id },
+      where: { reportId: params.reportId },
       data: { status },
     });
 

@@ -1,10 +1,10 @@
 import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server"; 
 import { getServerSession } from "next-auth";
 
 export async function PATCH(
-  request: Request,
-  { params }: { params: { reportId: string } }
+  request: NextRequest, 
+  { params: rawParams }: { params: Promise<{ reportId: string }> } 
 ) {
   try {
     const session = await getServerSession();
@@ -12,6 +12,7 @@ export async function PATCH(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    const params = await rawParams;
     const { status } = await request.json();
     const report = await prisma.report.update({
       where: { id: params.reportId },

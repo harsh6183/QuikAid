@@ -1,25 +1,24 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { PrismaClient } from "@prisma/client";
 import { getServerSession } from "next-auth";
 
 const prisma = new PrismaClient();
 
 export async function GET(
-  request: Request,
-  { params }: { params: { reportId: string } }
+  request: NextRequest,
+  // Correctly type params as a Promise and await it inside the function
+  { params: rawParams }: { params: Promise<{ reportId: string }> }
 ) {
   try {
+    // Await the params to get the resolved object
+    const params = await rawParams;
     const report = await prisma.report.findUnique({
-      where: {
-        reportId: params.reportId,
-      },
+      where: { reportId: params.reportId },
     });
 
-    if (!report) {
-      return NextResponse.json({ error: "Report not found" }, { status: 404 });
-    }
-
-    return NextResponse.json(report);
+    return report
+      ? NextResponse.json(report)
+      : NextResponse.json({ error: "Report not found" }, { status: 404 });
   } catch (error) {
     console.error("Error fetching report details:", error);
     return NextResponse.json(
@@ -30,8 +29,9 @@ export async function GET(
 }
 
 export async function PATCH(
-  request: Request,
-  { params }: { params: { reportId: string } }
+  request: NextRequest,
+  // Correctly type params as a Promise and await it inside the function
+  { params: rawParams }: { params: Promise<{ reportId: string }> }
 ) {
   try {
     const session = await getServerSession();
@@ -39,6 +39,8 @@ export async function PATCH(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Await the params to get the resolved object
+    const params = await rawParams;
     const { status } = await request.json();
     const report = await prisma.report.update({
       where: { reportId: params.reportId },
@@ -47,6 +49,7 @@ export async function PATCH(
 
     return NextResponse.json(report);
   } catch (error) {
+    console.error("Error updating report:", error);
     return NextResponse.json(
       { error: "Error updating report" },
       { status: 500 }

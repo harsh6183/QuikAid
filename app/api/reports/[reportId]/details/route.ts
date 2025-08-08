@@ -6,11 +6,11 @@ const prisma = new PrismaClient();
 
 export async function GET(
   request: NextRequest,
-  // Correctly type params as a Promise and await it inside the function
+
   { params: rawParams }: { params: Promise<{ reportId: string }> }
 ) {
   try {
-    // Await the params to get the resolved object
+
     const params = await rawParams;
     const report = await prisma.report.findUnique({
       where: { reportId: params.reportId },
@@ -30,7 +30,7 @@ export async function GET(
 
 export async function PATCH(
   request: NextRequest,
-  // Correctly type params as a Promise and await it inside the function
+  
   { params: rawParams }: { params: Promise<{ reportId: string }> }
 ) {
   try {
@@ -39,7 +39,7 @@ export async function PATCH(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Await the params to get the resolved object
+  
     const params = await rawParams;
     const { status } = await request.json();
     const report = await prisma.report.update({

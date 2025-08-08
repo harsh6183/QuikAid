@@ -1,51 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚨 Quick Aid
 
-## Getting Started
+Quick Aid is a real-time emergency reporting platform that enables users to instantly notify the right authorities — Police, Hospitals, or Fire Brigades — with precise location data.  
+The platform ensures **fast response times**, **secure communication**, and **anonymity** for reporters when needed.
 
-First, run the development server:
+---
 
+## 📌 Features
+
+- **Instant Emergency Reporting** – Submit incidents in seconds with location & media.
+- **Authority Selection** – Choose which agency to notify: Police, Ambulance, or Fire Brigade.
+- **Geo-Location Integration** – Powered by Mapbox for accurate location tracking.
+- **Real-Time Notifications via SMS** – Alerts sent directly to the selected authority.
+- **Anonymous Reporting** – Option to hide your identity for sensitive cases.
+- **Admin Dashboard** – Authorities can log in, view, and manage reports.
+- **Report Tracking** – Check status updates on submitted incidents.
+
+---
+
+## 🖥️ Tech Stack
+
+**Frontend:**
+- [Next.js](https://nextjs.org/) – React framework for the frontend.
+- [Tailwind CSS](https://tailwindcss.com/) – Utility-first styling.
+- [Lucide Icons](https://lucide.dev/) – Modern icon set.
+
+**Backend:**
+- [Next.js API Routes](https://nextjs.org/docs/api-routes/introduction)
+- [Prisma](https://www.prisma.io/) – Database ORM.
+- [NextAuth.js](https://next-auth.js.org/) – Authentication for admin dashboard.
+- [Twilio](https://www.twilio.com/) – SMS notifications.
+- [Mapbox](https://www.mapbox.com/) – Geo-location support.
+
+**Database:**
+- PostgreSQL (can be swapped with MySQL or other Prisma-supported DBs).
+
+---
+
+## 🚀 Getting Started
+
+### 1️⃣ Clone the Repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## 19 Started the project 
-## 21 july done with Home page 
-
-## 23 july done with the submite report page
-=> For live location used the OpenStreet Map source.
-
-
-## 24 july done with below parts adding in website.
-=> For Database I used Prisma and neon.  
-=> Authentication for the Authorized board feature is done using NextAuth and used JWT encryption and decryption for signup and login feature
-
-## 25 july done with environment setup files and SMS integration
-=> Used Twilio for the SMS integration
-=> Added saftey major decrypt model.
+git clone https://github.com/yourusername/quick-aid.git
+cd quick-aid

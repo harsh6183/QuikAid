@@ -42,3 +42,17 @@ The platform ensures **fast response times**, **secure communication**, and **an
 ```bash
 git clone https://github.com/yourusername/quick-aid.git
 cd quick-aid
+```
+### 2️⃣ Install Dependencies
+```bash
+npm install
+```
+### 3️⃣ Set Up Environment Variables  
+Create .env file in the root and add:  
+DATABASE_URL=your_database_connection_string
+NEXTAUTH_SECRET=your_nextauth_secret
+TWILIO_ACCOUNT_SID=your_twilio_sid
+TWILIO_AUTH_TOKEN=your_twilio_auth_token
+TWILIO_PHONE_NUMBER=your_twilio_number
+MAPBOX_ACCESS_TOKEN=your_mapbox_token
+

@@ -56,4 +56,15 @@ TWILIO_ACCOUNT_SID=your_twilio_sid
 TWILIO_AUTH_TOKEN=your_twilio_auth_token
 TWILIO_PHONE_NUMBER=your_twilio_number
 MAPBOX_ACCESS_TOKEN=your_mapbox_token
+```
+### 4️⃣ Run Database Migrations
+```bash
+npx prisma migrate dev
+
+```
+### 5️⃣ Start the Development Server
+```bash
+npm run dev
+
+
 

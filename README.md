@@ -48,7 +48,8 @@ cd quick-aid
 npm install
 ```
 ### 3️⃣ Set Up Environment Variables  
-Create .env file in the root and add:  
+Create .env file in the root and add: 
+```bash
 DATABASE_URL=your_database_connection_string
 NEXTAUTH_SECRET=your_nextauth_secret
 TWILIO_ACCOUNT_SID=your_twilio_sid

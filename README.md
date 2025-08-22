@@ -9,7 +9,7 @@ The platform ensures **fast response times**, **secure communication**, and **an
 
 - **Instant Emergency Reporting** – Submit incidents in seconds with location & media.
 - **Authority Selection** – Choose which agency to notify: Police, Ambulance, or Fire Brigade.
-- **Geo-Location Integration** – Powered by Mapbox for accurate location tracking.
+- **Geo-Location Integration** – Powered by Mapbox for accurate location tracking
 - **Real-Time Notifications via SMS** – Alerts sent directly to the selected authority.
 - **Anonymous Reporting** – Option to hide your identity for sensitive cases.
 - **Admin Dashboard** – Authorities can log in, view, and manage reports.

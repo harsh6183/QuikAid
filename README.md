@@ -22,7 +22,7 @@ The platform ensures **fast response times**, **secure communication**, and **an
 **Frontend:**
 - [Next.js](https://nextjs.org/) – React framework for the frontend.
 - [Tailwind CSS](https://tailwindcss.com/) – Utility-first styling.
-- [Lucide Icons](https://lucide.dev/) – Modern icon set.
+- [Lucide Icons](https://lucide.dev/) – Modern icon set
 
 **Backend:**
 - [Next.js API Routes](https://nextjs.org/docs/api-routes/introduction)

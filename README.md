@@ -1,4 +1,4 @@
-#  Quick Aid
+#   Quick Aid
 
 Quick Aid is a real-time emergency reporting platform that enables users to instantly notify the right authorities — Police, Hospitals, or Fire Brigades — with precise location data.  
 The platform ensures **fast response times**, **secure communication**, and **anonymity** for reporters when needed.
